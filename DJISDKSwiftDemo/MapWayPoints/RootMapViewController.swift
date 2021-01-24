@@ -218,6 +218,7 @@ class RootMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     @IBAction func fillGridBtnClicked(_ sender: UIButton) {
         fillGridPath(firstPoint: fourPoints[0], secondPoint: fourPoints[1], thirdPoint: fourPoints[2], fourthPoint: fourPoints[3])
+        fillGridPath(firstPoint: fourPoints[0], secondPoint: fourPoints[3], thirdPoint: fourPoints[2], fourthPoint: fourPoints[1])
         
     }
     
@@ -240,6 +241,9 @@ class RootMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 previousLoc = point1
             }
             animateSimulatorGroup.leave()
+            DispatchQueue.main.async {
+                self.showStatisticsDialog()
+            }
         
         }
     }
@@ -423,6 +427,15 @@ class RootMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         var polyline = MKPolyline(coordinates: gridFillarray, count: gridFillarray.count)
                mapView.addOverlay(polyline)
         
+    }
+    func showStatisticsDialog(){
+        var messageStatistics = "No of Images: 20\nDistance: 2Km\nSpeed: 1km/h\nHeight: 40feets\nAltitude: 20"
+        let alertController = UIAlertController(title: "Flight Statistics", message: messageStatistics, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+            print("Ok clicked")
+        }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
